@@ -14,9 +14,10 @@ typedef struct FUNCIONARIO{
 void cadastro(funcionario *funcionarios, int n,int n2){
 
     int i;
+    char continuar;
 
     for(i = n2; i < (n2+n); i++){
-        printf("\nCadastrando funcionario %d", i+1);
+        printf("\nCadastrando Funcionario %d", i+1);
 
         printf("\nNome: ");
         funcionarios[i].nome = (char*)malloc(sizeof(char) * 60);
@@ -30,13 +31,17 @@ void cadastro(funcionario *funcionarios, int n,int n2){
         scanf("%d", &funcionarios[i].idade);
     }
 
-    printf("Cadastro Realizado!\n");
-
+    printf("\nCadastro Realizado!\n");
+    printf("Pressione Enter Para Continuar.\n");
+    getchar();
+    scanf("%c", &continuar);
+    system("clear");
 }
 
 void listagem(funcionario *funcionarios, int n2){
 
 	int i = 0;
+    char continuar;
     printf("Ok, listando funcionarios cadastrados:\n\n");
 
         for(i = 0; i < n2; i++){
@@ -46,12 +51,16 @@ void listagem(funcionario *funcionarios, int n2){
             printf("%d\n", funcionarios[i].idade);
             printf("---------------------------\n");
     }
+    printf("Pressione Enter Para Continuar.\n");
+    getchar();
+    scanf("%c", &continuar);
+    system("clear");
 }
 
 void edicao(funcionario *funcionarios, int n2){
 
     int op, editfunc, procura, editind;
-    char *edit;
+    char *edit, continuar;
 
     edit = (char*)malloc(80 * sizeof(char));
 
@@ -79,6 +88,8 @@ void edicao(funcionario *funcionarios, int n2){
         }
 
         if(procura == 0){
+            system("clear");
+            printf("\nFuncionário Encontrado!\n");
             printf("Novo Nome: ");
             scanf(" %[^\n]",funcionarios[editfunc].nome);
             printf("Novo Email: ");
@@ -86,8 +97,16 @@ void edicao(funcionario *funcionarios, int n2){
             printf("Nova Idade: ");
             scanf("%d",&funcionarios[editfunc].idade);
             printf("\nFuncionario Editado Com Sucesso!\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
         }else{
             printf("\nFuncionário Não Encontrado!\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
         }
 
     break;
@@ -109,6 +128,8 @@ void edicao(funcionario *funcionarios, int n2){
         }
 
         if(procura == 0){
+            system("clear");
+            printf("\nFuncionário Encontrado!\n");
             printf("Novo Nome: ");
             scanf(" %[^\n]",funcionarios[editfunc].nome);
             printf("Novo Email: ");
@@ -116,8 +137,16 @@ void edicao(funcionario *funcionarios, int n2){
             printf("Nova Idade: ");
             scanf("%d",&funcionarios[editfunc].idade);
             printf("\nFuncionario Editado Com Sucesso!\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
         }else{
             printf("\nFuncionário Não Encontrado!\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
         }
 
     break;
@@ -127,13 +156,23 @@ void edicao(funcionario *funcionarios, int n2){
         printf("\nQual o indice do funcionario a ser editado?\n");
         scanf("%d", &editind);
 
-        printf("Novo Nome: ");
-        scanf(" %[^\n]",funcionarios[editind].nome);
-        printf("Novo Email: ");
-        scanf(" %[^\n]",funcionarios[editind].email);
-        printf("Nova Idade: ");
-        scanf("%d",&funcionarios[editind].idade);
-        printf("\nFuncionario Editado Com Sucesso!\n");
+        if(editind > n2 || editind < 0){
+            printf("Índice Inválido, Tente Novamente.\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
+        }else{
+            system("clear");
+            printf("\nFuncionário Encontrado!\n");
+            printf("Novo Nome: ");
+            scanf(" %[^\n]",funcionarios[editind].nome);
+            printf("Novo Email: ");
+            scanf(" %[^\n]",funcionarios[editind].email);
+            printf("Nova Idade: ");
+            scanf("%d",&funcionarios[editind].idade);
+            printf("\nFuncionario Editado Com Sucesso!\n");
+        }
 
     break;
 
@@ -144,7 +183,7 @@ void edicao(funcionario *funcionarios, int n2){
 void exclui(funcionario *funcionarios, int n2){
 
     int opcao, indexclui, buscaind;
-    char *exclui;
+    char *exclui, continuar;
 
     printf("\nBuscar funcionario por indice ou por nome?\n");
     printf("\n(1)Indice\n(2)Nome\nOpcao: ");
@@ -167,6 +206,10 @@ void exclui(funcionario *funcionarios, int n2){
         funcionarios = (funcionario*)realloc(funcionarios, sizeof(funcionario)*(n2));
 
         printf("\nFuncionario Excluido!\n");
+        printf("Pressione Enter Para Continuar.\n");
+        getchar();
+        scanf("%c", &continuar);
+        system("clear");
 
     break;
 
@@ -178,16 +221,23 @@ void exclui(funcionario *funcionarios, int n2){
         for(int i = 0; i < n2; i++){
             if(strcasecmp(funcionarios[i].nome, exclui) == 0){
                 buscaind = i;
+                for(int i = buscaind; i < (n2-1); i++){
+                funcionarios[i] = funcionarios[i + 1];
+                }
+                printf("\nFuncionario Excluido!\n");
+                printf("Pressione Enter Para Continuar.\n");
+                getchar();
+                scanf("%c", &continuar);
+                system("clear");
+                funcionarios = (funcionario*)realloc(funcionarios, sizeof(funcionario)*(n2));
+            }else{
+                printf("\nFuncionario Não Encontrado.\n");
+                printf("Pressione Enter Para Continuar.\n");
+                getchar();
+                scanf("%c", &continuar);
+                system("clear");
             }
         }
-
-        for(int i = buscaind; i < (n2-1); i++){
-                funcionarios[i] = funcionarios[i + 1];
-        }
-
-        funcionarios = (funcionario*)realloc(funcionarios, sizeof(funcionario)*(n2));
-
-        printf("\nFuncionario Excluido!\n");
 
     break;
 
@@ -198,11 +248,13 @@ int main(){
 
     funcionario *funcionarios;
 
+    char continuar;
+
     int mantem = 1, n2 = 0 , n;
 
     while(mantem != 0){
 
-
+       system("clear");
        printf("\nMenu - Gerenciamento de Funcionarios\n");
        printf("\n(1)Cadastrar Novo Funcionario\n");
        printf("(2)Listar Funcionarios\n");
@@ -239,13 +291,29 @@ int main(){
 
         case 2:
 
-        listagem(funcionarios, n2);
+        if(n2 > 0){
+            listagem(funcionarios, n2);
+        }else{
+            printf("Sem Funcionários Cadastrados.\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
+        }
 
         break;
 
         case 3:
 
-        edicao(funcionarios, n2);
+        if(n2 > 0){
+            edicao(funcionarios, n2);
+        }else{
+            printf("Sem Funcionários Cadastrados.\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
+        }
 
         break;
 
@@ -256,6 +324,10 @@ int main(){
             n2--;
           }else{
             printf("\nSem Funcionarios Cadastrados.\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
           }
 
         break;
@@ -264,7 +336,9 @@ int main(){
 
     }
 
-    free(funcionarios);
+    if(n2 < 0){
+        free(funcionarios);
+    }
 
     return 0;
 }
