@@ -180,7 +180,7 @@ void edicao(funcionario *funcionarios, int n2){
 
 }
 
-void exclui(funcionario *funcionarios, int n2){
+int exclui(funcionario *funcionarios, int n2){
 
     int opcao, indexclui, buscaind;
     char *exclui, continuar;
@@ -199,17 +199,27 @@ void exclui(funcionario *funcionarios, int n2){
         printf("\nIndice: ");
         scanf("%d", &indexclui);
 
-        for(int i = indexclui; i < n2; i++){
-            funcionarios[i] = funcionarios[i + 1];
+        if(indexclui > n2 || indexclui < 0){
+            printf("Índice Inválido, Tente Novamente.\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
+            return 1;
+        }else{
+
+            for(int i = indexclui; i < n2; i++){
+                funcionarios[i] = funcionarios[i + 1];
+            }
+
+            funcionarios = (funcionario*)realloc(funcionarios, sizeof(funcionario)*(n2));
+
+            printf("\nFuncionario Excluido!\n");
+            printf("Pressione Enter Para Continuar.\n");
+            getchar();
+            scanf("%c", &continuar);
+            system("clear");
         }
-
-        funcionarios = (funcionario*)realloc(funcionarios, sizeof(funcionario)*(n2));
-
-        printf("\nFuncionario Excluido!\n");
-        printf("Pressione Enter Para Continuar.\n");
-        getchar();
-        scanf("%c", &continuar);
-        system("clear");
 
     break;
 
@@ -236,12 +246,14 @@ void exclui(funcionario *funcionarios, int n2){
                 getchar();
                 scanf("%c", &continuar);
                 system("clear");
+                return 1;
             }
         }
 
     break;
 
     }
+    return 0;;
 }
 
 int main(){
@@ -250,7 +262,7 @@ int main(){
 
     char continuar;
 
-    int mantem = 1, n2 = 0 , n;
+    int mantem = 1, n2 = 0 , n, retorno;
 
     while(mantem != 0){
 
@@ -320,8 +332,10 @@ int main(){
         case 4:
 
           if(n2 != 0){
-            exclui(funcionarios, n2);
-            n2--;
+            retorno = exclui(funcionarios, n2);
+            if(retorno == 0){
+                n2--;
+            }
           }else{
             printf("\nSem Funcionarios Cadastrados.\n");
             printf("Pressione Enter Para Continuar.\n");
@@ -329,6 +343,8 @@ int main(){
             scanf("%c", &continuar);
             system("clear");
           }
+
+          
 
         break;
 
